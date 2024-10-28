@@ -59,10 +59,10 @@ func _on_score_timer_timeout() -> void:
 	if score % 20 == 19:
 		max_mob_scale += 1
 
-func get_mob_spawn_location():
+func get_mob_spawn_location() -> PathFollow2D:
 	"""Get mob spawn location"""
 
-	var mob_spawn_location = $MobPath/MobSpawnLocation
+	var mob_spawn_location: PathFollow2D = $MobPath/MobSpawnLocation
 	mob_spawn_location.progress_ratio = randf()
 
 	return mob_spawn_location
@@ -87,7 +87,7 @@ func _on_mob_timer_timeout():
 	mob.position = spawn_location.position
 	
 	# Set the mob's direction perpendicular to the path direction.
-	# And add some randomness to the direction - [-27.5, 27.5] degrees
+	# And add some randomness to the direction - [-45, 45] degrees
 	var direction = spawn_location.rotation + PI / 2
 	direction += randf_range(-PI / 4, PI / 4)
 	mob.rotation = direction

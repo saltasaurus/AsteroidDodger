@@ -49,7 +49,7 @@ func handle_thrust() -> bool:
 		is within the mouse "deadzone" 
 	"""
 	var is_thrusting = false
-	# Only change velocity is mouse is pressed
+	# Only change velocity if mouse is pressed
 	if mouse_left_down:
 		# Direction towards mouse 
 		var to_mouse = mouse_position - position
