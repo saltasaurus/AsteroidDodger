@@ -2,7 +2,7 @@
 On a mission to save humanity, you must train the next generation of star pilots!
 
 ## Fly the ship! 🚀
-Using your mouse, direct the ships navigation system around space. Careful though, those asteroids aren't friendly!
+Using your mouse, direct the ship's navigation system around space. Careful though, those asteroids aren't friendly!
 
 ## Asteroids 🪨
 As humanity explores new worlds and even new solar systems, asteroids are our main enemy out there.\
