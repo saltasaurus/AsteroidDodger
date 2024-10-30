@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://hafo12u07pmw"]
 
-[ext_resource type="Script" path="res://Scripts/mob.gd" id="1_kqmyp"]
+[ext_resource type="Script" path="res://Scripts/asteroid.gd" id="1_kqmyp"]
 [ext_resource type="Texture2D" uid="uid://u5lf5fai66n3" path="res://Assets/asteroid_1.png" id="2_gtl3g"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_fmf4b"]
@@ -31,5 +31,6 @@ scale = Vector2(2, 2)
 sprite_frames = SubResource("SpriteFrames_5jfdo")
 
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+rect = Rect2(-32, -32, 64, 64)
 
 [connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]
