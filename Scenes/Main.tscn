@@ -1,9 +1,11 @@
-[gd_scene load_steps=8 format=4 uid="uid://0cotd6v42dce"]
+[gd_scene load_steps=10 format=4 uid="uid://0cotd6v42dce"]
 
 [ext_resource type="Script" path="res://Scripts/main.gd" id="1_38im6"]
+[ext_resource type="PackedScene" uid="uid://c5tkb5mbqdfja" path="res://Scenes/Spaceship_2.tscn" id="3_3e1bk"]
 [ext_resource type="PackedScene" uid="uid://b7bvnqbkmnxem" path="res://Scenes/Spaceship.tscn" id="3_n75ar"]
 [ext_resource type="PackedScene" uid="uid://dajm80l4hygwg" path="res://Scenes/HUD.tscn" id="4_tilwl"]
 [ext_resource type="AudioStream" uid="uid://b4g6f3vtjmjvx" path="res://Audio/gameover.wav" id="6_ji7rn"]
+[ext_resource type="Texture2D" uid="uid://c6fmiegl76ogu" path="res://Assets/flame_particle.png" id="6_keab8"]
 
 [sub_resource type="Curve2D" id="Curve2D_10o3g"]
 _data = {
@@ -22,6 +24,7 @@ loop = true
 
 [node name="Main" type="Node"]
 script = ExtResource("1_38im6")
+spaceships = Array[PackedScene]([ExtResource("3_n75ar"), ExtResource("3_3e1bk")])
 
 [node name="Background" type="ColorRect" parent="."]
 anchors_preset = 15
@@ -38,8 +41,6 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-
-[node name="Player" parent="." instance=ExtResource("3_n75ar")]
 
 [node name="AsteroidTimer" type="Timer" parent="."]
 wait_time = 0.5
@@ -66,7 +67,19 @@ stream = SubResource("AudioStreamOggVorbis_gv1uy")
 [node name="DeathSound" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("6_ji7rn")
 
-[connection signal="hit" from="Player" to="." method="game_over"]
+[node name="DeathAnimation" type="CPUParticles2D" parent="."]
+scale = Vector2(2, 2)
+emitting = false
+amount = 64
+lifetime = 0.5
+one_shot = true
+explosiveness = 1.0
+texture = ExtResource("6_keab8")
+spread = 180.0
+gravity = Vector2(0, 0)
+initial_velocity_min = 120.0
+initial_velocity_max = 120.0
+
 [connection signal="timeout" from="AsteroidTimer" to="." method="_on_asteroid_timer_timeout"]
 [connection signal="timeout" from="ScoreTimer" to="." method="_on_score_timer_timeout"]
 [connection signal="timeout" from="StartTimer" to="." method="_on_start_timer_timeout"]

@@ -1,7 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://hafo12u07pmw"]
+[gd_scene load_steps=8 format=3 uid="uid://hafo12u07pmw"]
 
 [ext_resource type="Script" path="res://Scripts/asteroid.gd" id="1_kqmyp"]
-[ext_resource type="Texture2D" uid="uid://u5lf5fai66n3" path="res://Assets/asteroid_1.png" id="2_gtl3g"]
+[ext_resource type="Texture2D" uid="uid://u5lf5fai66n3" path="res://Assets/Asteroids/asteroid_1.png" id="2_gtl3g"]
+[ext_resource type="Texture2D" uid="uid://bat55hljuk60r" path="res://Assets/Asteroids/asteroid_2.png" id="3_34f4p"]
+[ext_resource type="Texture2D" uid="uid://bjjnwbn3st0lt" path="res://Assets/Asteroids/asteroid_3.png" id="4_krq8f"]
+[ext_resource type="Texture2D" uid="uid://ba7b0g33cvg3j" path="res://Assets/Asteroids/asteroid_4.png" id="5_gy7jj"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_fmf4b"]
 friction = 0.0
@@ -11,10 +14,34 @@ bounce = 1.0
 animations = [{
 "frames": [{
 "duration": 1.0,
+"texture": ExtResource("5_gy7jj")
+}],
+"loop": true,
+"name": &"Crumble",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_34f4p")
+}],
+"loop": true,
+"name": &"OwO",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
 "texture": ExtResource("2_gtl3g")
 }],
 "loop": true,
-"name": &"default",
+"name": &"Smile",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("4_krq8f")
+}],
+"loop": true,
+"name": &"Smooth",
 "speed": 5.0
 }]
 
@@ -29,6 +56,7 @@ metadata/_edit_group_ = true
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 scale = Vector2(2, 2)
 sprite_frames = SubResource("SpriteFrames_5jfdo")
+animation = &"Crumble"
 
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
 rect = Rect2(-32, -32, 64, 64)

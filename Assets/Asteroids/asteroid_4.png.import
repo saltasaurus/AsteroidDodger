@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c1a8n61oaqjc"
-path="res://.godot/imported/ship_idle.png-f83c14aae8d9a925ac9b393d25ed2c60.ctex"
+uid="uid://ba7b0g33cvg3j"
+path="res://.godot/imported/asteroid_4.png-4ad3ccf1aacb3d6cf3aff285e6e3b8a0.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/ship_idle.png"
-dest_files=["res://.godot/imported/ship_idle.png-f83c14aae8d9a925ac9b393d25ed2c60.ctex"]
+source_file="res://Assets/Asteroids/asteroid_4.png"
+dest_files=["res://.godot/imported/asteroid_4.png-4ad3ccf1aacb3d6cf3aff285e6e3b8a0.ctex"]
 
 [params]
 

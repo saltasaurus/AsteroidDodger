@@ -1,6 +1,12 @@
 extends Node
 
+# Add new spaceship scenes to array in Editor
+@export var spaceships: Array[PackedScene]
+
+# Asteroids share a single scene
 var asteroid_scene: PackedScene = preload("res://Scenes/Asteroid.tscn")
+# Will be the isntantiated spaceship
+var player: Node2D = null
 var score
 
 # Base variables
@@ -12,25 +18,38 @@ var score_min_asteroid_speed_add = 0.0
 var score_max_asteroid_speed_add = 0.0
 var max_asteroid_scale = 3
 
-# Called when the node enters the scene tree for the first time.
-func _ready() -> void:
-	pass
+func create_player(position: Vector2) -> void:
+	"""Randomly selects and creates a spaceship scene and adds to the scene"""
+
+	# Randomly select spaceship scene from exported Array spaceships
+	var player_scene: PackedScene = spaceships[randi() % spaceships.size()]
+	# Instantiate so modifications can be made to signals and position
+	player = player_scene.instantiate()
+	# Connect player's :method:`hit` to main's :method:`game_over`
+	player.hit.connect(game_over)
+	# Set player location to given Vector2
+	player.start(position)
+	# Add updated player scene to main scene tree
+	add_child(player)
+	
 
 func new_game():
 	"""Begins a new game
 	
 	When the game starts, the player is placed,
-	the game timer beings, and the HUD is updated
+	the game timer begins, and the HUD is updated
 
-	Note: HUD.start_game must be connected for the HUD.StartButton to call this function
+	Note
+	----
+	HUD.start_game must be connected for the HUD.StartButton to call this function
 	"""
 	
 	get_tree().call_group("asteroids", "queue_free")
+	create_player($StartPosition.position)
+
 	score = 0
 	$Music.play()
-	$Player.start($StartPosition.position)
 	$StartTimer.start()
-
 	$HUD.update_score(score)
 	$HUD.show_message("Get Ready")
 
@@ -38,18 +57,45 @@ func new_game():
 	score_max_asteroid_speed_add = 0
 	max_asteroid_scale = 3
 
-func game_over():
+func stop_timers():
+	"""Stop game timers"""
+
 	$ScoreTimer.stop()
 	$AsteroidTimer.stop()
-	$HUD.show_game_over()
+
+func play_death_animation():
+	"""Handles state changes for death animation"""
+
+	$DeathAnimation.position = player.position
+	$DeathAnimation.emitting = true
+
+func play_death_sounds():
+	"""Stops music and plays death sound"""
+
 	$Music.stop()
 	$DeathSound.play()
 
+func game_over():
+	"""Handles all state changes when player loses
+	
+	This function stops all timers, plays related animations and sounds,
+	and signals the HUD to change
+	"""
+
+	stop_timers()
+	play_death_animation()
+	play_death_sounds()
+	$HUD.show_game_over()
+
 func _on_start_timer_timeout() -> void:
+	"""When starting the game, being asteroid timer and score timer"""
+
 	$AsteroidTimer.start()
 	$ScoreTimer.start()
 
 func _on_score_timer_timeout() -> void:
+	"""Update the score, HUD, and difficulty ramping when score timer timeouts"""
+
 	score += 1
 	$HUD.update_score(score)
 
@@ -60,7 +106,7 @@ func _on_score_timer_timeout() -> void:
 		max_asteroid_scale += 1
 
 func get_asteroid_spawn_location() -> PathFollow2D:
-	"""Get asteroid spawn location"""
+	"""Get asteroid spawn location based on randomly location along asteroid spawn path"""
 
 	var asteroid_spawn_location: PathFollow2D = $AsteroidPath/AsteroidSpawnLocation
 	asteroid_spawn_location.progress_ratio = randf()
@@ -68,16 +114,24 @@ func get_asteroid_spawn_location() -> PathFollow2D:
 	return asteroid_spawn_location
 
 func create_new_circle_collider(scale) -> CollisionShape2D:
-	# Create new collider and shape, adjust radius to fit scale
+	"""Creates a new ColliderShape2D with a scaled 16 pixel circle collider"""
+
+	# Create new collider with no positional offset
 	var new_collision_shape = CollisionShape2D.new()
 	new_collision_shape.position = Vector2.ZERO
+	# Create the circle collider that will be scaled
 	var new_circle_shape = CircleShape2D.new()
+	# Sprites are based on 16 pixel sizes
 	new_circle_shape.radius = scale * 16
+	# Attach the circle shape to the collider
 	new_collision_shape.shape = new_circle_shape
 	return new_collision_shape
 
 func _on_asteroid_timer_timeout():
-	print("Asteroid Spawning")
+	"""Creates a new asteroid with a random location around the screen and
+	a velocity pointing into the screen, and scaled based on difficulty
+	"""
+
 	# Create a new instance of the asteroid scene.
 	var asteroid: RigidBody2D = asteroid_scene.instantiate()
 	

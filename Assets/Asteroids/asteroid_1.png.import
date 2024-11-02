@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dpm7t4o1m8ouc"
-path="res://.godot/imported/ship_thrusting.png-227c8f88c0e30e3980396e751d574f47.ctex"
+uid="uid://u5lf5fai66n3"
+path="res://.godot/imported/asteroid_1.png-3818cd3690d9fadb64ef0c329fa6380f.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/ship_thrusting.png"
-dest_files=["res://.godot/imported/ship_thrusting.png-227c8f88c0e30e3980396e751d574f47.ctex"]
+source_file="res://Assets/Asteroids/asteroid_1.png"
+dest_files=["res://.godot/imported/asteroid_1.png-3818cd3690d9fadb64ef0c329fa6380f.ctex"]
 
 [params]
 

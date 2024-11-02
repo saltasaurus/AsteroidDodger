@@ -2,6 +2,7 @@ extends Area2D
 
 signal hit
 
+@export var thrusters: Array[CPUParticles2D]
 # BUG: When exporting, Player isn't initialized before and sets to NULL
 # Unsure how to defer setting values until Player initialized. 
 var speed = 10
@@ -20,6 +21,9 @@ func _ready() -> void:
 	start(screen_size / 2)
 		
 func start(pos):
+	"""Sets up player so that it is visible, can be moved,
+	and interacts with the main scene"""
+
 	position = pos
 	show()
 	$CollisionShape2D.disabled = false
@@ -64,6 +68,11 @@ func handle_thrust() -> bool:
 
 	return is_thrusting
 
+func emit_thruster_particles(emit: bool = false):
+	"""Enables and disables all CPUParticle2D nodes emitting property together"""
+	for thruster in thrusters:
+		thruster.emitting = emit
+
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	mouse_position = get_global_mouse_position()
@@ -72,8 +81,8 @@ func _process(delta: float) -> void:
 	var is_thrusting = handle_thrust()
 	look_at(mouse_position)
 
-	# Adjust animation if "adding" movement
-	$AnimatedSprite2D.animation = "thruster" if is_thrusting else "idle"
+	# Tell thrusters to emit only when thrusting
+	emit_thruster_particles(is_thrusting)
 
 	# Move Player based on calculated velocity but prevent going off screen
 	position += velocity * delta
@@ -81,8 +90,7 @@ func _process(delta: float) -> void:
 	
 
 func _on_body_entered(_body:Node2D) -> void:
+	"""Makes sprite invisible, emits the hit signal, and turns off collider"""
 	hide()
 	hit.emit()
 	$CollisionShape2D.set_deferred("disabled", true)
-
-	# TODO: Play explode animation

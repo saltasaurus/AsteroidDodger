@@ -1,0 +1,51 @@
+[gd_scene load_steps=6 format=3 uid="uid://c5tkb5mbqdfja"]
+
+[ext_resource type="Texture2D" uid="uid://dtcpauc3nqrg0" path="res://Assets/Spaceships/spaceship_lancer.png" id="1_45vml"]
+[ext_resource type="Script" path="res://Scripts/Spaceship.gd" id="1_k7two"]
+[ext_resource type="Texture2D" uid="uid://c6fmiegl76ogu" path="res://Assets/flame_particle.png" id="2_b3ja4"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ja8hr"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_45vml")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_goums"]
+radius = 24.0
+height = 48.0
+
+[node name="Player" type="Area2D" node_paths=PackedStringArray("thrusters")]
+script = ExtResource("1_k7two")
+thrusters = [NodePath("Left_thruster"), NodePath("Right_thruster")]
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+rotation = -3.14159
+scale = Vector2(3, 3)
+sprite_frames = SubResource("SpriteFrames_ja8hr")
+animation = &"idle"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CapsuleShape2D_goums")
+
+[node name="Left_thruster" type="CPUParticles2D" parent="."]
+position = Vector2(-25, -17)
+rotation = 1.5708
+amount = 3
+lifetime = 0.2
+local_coords = true
+texture = ExtResource("2_b3ja4")
+
+[node name="Right_thruster" type="CPUParticles2D" parent="."]
+position = Vector2(-25, 17)
+rotation = 1.5708
+amount = 3
+lifetime = 0.2
+local_coords = true
+texture = ExtResource("2_b3ja4")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

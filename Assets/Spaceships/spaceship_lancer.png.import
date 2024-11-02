@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://u5lf5fai66n3"
-path="res://.godot/imported/asteroid_1.png-ac79565b838a32a9f0a2985bfa9ded37.ctex"
+uid="uid://dtcpauc3nqrg0"
+path="res://.godot/imported/spaceship_lancer.png-d22127273f43060240585827ff6c5bcb.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/asteroid_1.png"
-dest_files=["res://.godot/imported/asteroid_1.png-ac79565b838a32a9f0a2985bfa9ded37.ctex"]
+source_file="res://Assets/Spaceships/spaceship_lancer.png"
+dest_files=["res://.godot/imported/spaceship_lancer.png-d22127273f43060240585827ff6c5bcb.ctex"]
 
 [params]
 
