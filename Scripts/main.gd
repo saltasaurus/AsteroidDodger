@@ -2,6 +2,9 @@ extends Node
 
 # Add new spaceship scenes to array in Editor
 @export var spaceships: Array[PackedScene]
+var spaceship_nodes: Array[Node2D]
+var spaceships_total: int
+var spaceship_index: int = 0
 
 # Asteroids share a single scene
 var asteroid_scene: PackedScene = preload("res://Scenes/Asteroid.tscn")
@@ -18,6 +21,15 @@ var score_min_asteroid_speed_add = 0.0
 var score_max_asteroid_speed_add = 0.0
 var max_asteroid_scale = 3
 
+func _ready():
+	spaceships_total = len(spaceships)
+	# Create all spaceship scenes so they can be selected
+	for spaceship_scene in spaceships:
+		var spaceship = spaceship_scene.instantiate()
+		spaceship_nodes.append(spaceship)
+
+	print(spaceship_nodes)
+
 func create_player(position: Vector2) -> void:
 	"""Randomly selects and creates a spaceship scene and adds to the scene"""
 
@@ -31,10 +43,21 @@ func create_player(position: Vector2) -> void:
 	player.start(position)
 	# Add updated player scene to main scene tree
 	add_child(player)
-	
+
+func add_spaceship_index():
+	spaceship_index = min(spaceship_index + 1, spaceships_total)
+	display_spaceship()
+
+func sub_spaceship_index():
+	spaceship_index = max(spaceship_index - 1, 0)
+	display_spaceship()
+
+func display_spaceship():
+	print(spaceship_index)
+
 
 func new_game():
-	"""Begins a new game
+	"""Begins a new game when Start button is pressed
 	
 	When the game starts, the player is placed,
 	the game timer begins, and the HUD is updated

@@ -83,4 +83,6 @@ initial_velocity_max = 120.0
 [connection signal="timeout" from="AsteroidTimer" to="." method="_on_asteroid_timer_timeout"]
 [connection signal="timeout" from="ScoreTimer" to="." method="_on_score_timer_timeout"]
 [connection signal="timeout" from="StartTimer" to="." method="_on_start_timer_timeout"]
+[connection signal="left_arrow_pressed" from="HUD" to="." method="sub_spaceship_index"]
+[connection signal="right_arrow_pressed" from="HUD" to="." method="add_spaceship_index"]
 [connection signal="start_game" from="HUD" to="." method="new_game"]

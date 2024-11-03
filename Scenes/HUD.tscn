@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://dajm80l4hygwg"]
+[gd_scene load_steps=4 format=3 uid="uid://dajm80l4hygwg"]
 
 [ext_resource type="Script" path="res://Scripts/hud.gd" id="1_dnse0"]
 [ext_resource type="FontFile" uid="uid://d0s2xkw8yq4b1" path="res://fonts/Xolonium-Regular.ttf" id="2_ecow8"]
+[ext_resource type="Texture2D" uid="uid://cohnio2p87glc" path="res://Assets/icon.svg" id="3_axqyu"]
 
 [node name="HUD" type="CanvasLayer"]
 script = ExtResource("1_dnse0")
@@ -27,9 +28,9 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -240.0
-offset_top = -120.0
+offset_top = -244.0
 offset_right = 240.0
-offset_bottom = 120.0
+offset_bottom = -4.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_fonts/font = ExtResource("2_ecow8")
@@ -59,5 +60,43 @@ text = "Start"
 wait_time = 2.0
 one_shot = true
 
+[node name="LeftArrow" type="Button" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -128.0
+offset_top = -12.0
+offset_right = -104.0
+offset_bottom = 12.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Sprite2D" type="Sprite2D" parent="LeftArrow"]
+position = Vector2(12, 12)
+scale = Vector2(0.1875, 0.1875)
+texture = ExtResource("3_axqyu")
+
+[node name="RightArrow" type="Button" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 104.0
+offset_top = -11.0
+offset_right = 128.0
+offset_bottom = 13.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Sprite2D" type="Sprite2D" parent="RightArrow"]
+position = Vector2(12, 12)
+scale = Vector2(0.1875, 0.183594)
+texture = ExtResource("3_axqyu")
+
 [connection signal="pressed" from="StartButton" to="." method="_on_start_button_pressed"]
 [connection signal="timeout" from="MessageTimer" to="." method="_on_message_timer_timeout"]
+[connection signal="pressed" from="LeftArrow" to="." method="_on_left_arrow_pressed"]
+[connection signal="pressed" from="RightArrow" to="." method="_on_right_arrow_pressed"]
