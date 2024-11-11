@@ -1,0 +1,140 @@
+[gd_scene load_steps=13 format=3 uid="uid://dajm80l4hygwg"]
+
+[ext_resource type="Script" path="res://HUD/hud.gd" id="1_dnse0"]
+[ext_resource type="FontFile" uid="uid://d0s2xkw8yq4b1" path="res://HUD/fonts/Xolonium-Regular.ttf" id="2_ecow8"]
+[ext_resource type="PackedScene" uid="uid://c5tkb5mbqdfja" path="res://spaceships/lancer/lancer.tscn" id="3_qolw7"]
+[ext_resource type="PackedScene" uid="uid://y1tpc67ey4sm" path="res://spaceships/ufo/ufo.tscn" id="4_d4308"]
+[ext_resource type="PackedScene" uid="uid://b7bvnqbkmnxem" path="res://spaceships/slicer/slicer.tscn" id="4_v5grn"]
+[ext_resource type="Texture2D" uid="uid://cq8ihvw0yu22k" path="res://HUD/Sprites/Arrow.png" id="5_2h2rs"]
+
+[sub_resource type="InputEventKey" id="InputEventKey_5ns26"]
+device = -1
+keycode = 4194319
+
+[sub_resource type="InputEventKey" id="InputEventKey_n25l6"]
+device = -1
+keycode = 65
+unicode = 97
+
+[sub_resource type="Shortcut" id="Shortcut_l60gb"]
+events = [SubResource("InputEventKey_5ns26"), SubResource("InputEventKey_n25l6")]
+
+[sub_resource type="InputEventKey" id="InputEventKey_q0omk"]
+device = -1
+keycode = 4194321
+
+[sub_resource type="InputEventKey" id="InputEventKey_vr2mu"]
+device = -1
+keycode = 68
+unicode = 100
+
+[sub_resource type="Shortcut" id="Shortcut_ka485"]
+events = [SubResource("InputEventKey_q0omk"), SubResource("InputEventKey_vr2mu")]
+
+[node name="HUD" type="CanvasLayer"]
+script = ExtResource("1_dnse0")
+spaceships = Array[PackedScene]([ExtResource("4_v5grn"), ExtResource("3_qolw7"), ExtResource("4_d4308")])
+
+[node name="ScoreLabel" type="Label" parent="."]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -22.5
+offset_right = 22.5
+offset_bottom = 78.0
+grow_horizontal = 2
+theme_override_fonts/font = ExtResource("2_ecow8")
+theme_override_font_sizes/font_size = 64
+text = "0"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Message" type="Label" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -240.0
+offset_top = -244.0
+offset_right = 240.0
+offset_bottom = -4.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("2_ecow8")
+theme_override_font_sizes/font_size = 64
+text = "Dodge the asteroids!"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+
+[node name="StartButton" type="Button" parent="."]
+visible = false
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -100.0
+offset_top = -148.0
+offset_right = 100.0
+offset_bottom = -48.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_fonts/font = ExtResource("2_ecow8")
+theme_override_font_sizes/font_size = 64
+text = "Start"
+
+[node name="MessageTimer" type="Timer" parent="."]
+wait_time = 2.0
+one_shot = true
+
+[node name="CharacterSelector" type="Node" parent="."]
+
+[node name="LeftArrow" type="Button" parent="CharacterSelector"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -96.0
+offset_top = 44.0
+offset_right = -72.0
+offset_bottom = 68.0
+grow_horizontal = 2
+grow_vertical = 2
+shortcut = SubResource("Shortcut_l60gb")
+icon_alignment = 1
+expand_icon = true
+metadata/_edit_group_ = true
+
+[node name="LeftArrowSprite" type="Sprite2D" parent="CharacterSelector/LeftArrow"]
+position = Vector2(12, 12)
+rotation = 3.14159
+scale = Vector2(1.5, 1.5)
+texture = ExtResource("5_2h2rs")
+
+[node name="RightArrow" type="Button" parent="CharacterSelector"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 72.0
+offset_top = 44.0
+offset_right = 96.0
+offset_bottom = 68.0
+grow_horizontal = 2
+grow_vertical = 2
+shortcut = SubResource("Shortcut_ka485")
+metadata/_edit_group_ = true
+
+[node name="RightArrowSprite" type="Sprite2D" parent="CharacterSelector/RightArrow"]
+position = Vector2(12, 12)
+scale = Vector2(1.5, 1.5)
+texture = ExtResource("5_2h2rs")
+
+[connection signal="pressed" from="StartButton" to="." method="_on_start_button_pressed"]
+[connection signal="timeout" from="MessageTimer" to="." method="_on_message_timer_timeout"]
+[connection signal="pressed" from="CharacterSelector/LeftArrow" to="." method="_on_left_arrow_pressed"]
+[connection signal="pressed" from="CharacterSelector/RightArrow" to="." method="_on_right_arrow_pressed"]

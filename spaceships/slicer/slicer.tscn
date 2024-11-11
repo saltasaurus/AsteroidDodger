@@ -1,0 +1,64 @@
+[gd_scene load_steps=5 format=3 uid="uid://b7bvnqbkmnxem"]
+
+[ext_resource type="Script" path="res://spaceships/spaceship_controller.gd" id="1_63ctf"]
+[ext_resource type="Texture2D" uid="uid://c1a8n61oaqjc" path="res://spaceships/slicer/slicer.png" id="2_s3c4r"]
+[ext_resource type="Texture2D" uid="uid://c6fmiegl76ogu" path="res://spaceships/thrust_particles/flame_particle.png" id="4_ut8fl"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_t6ch8"]
+radius = 24.0
+
+[node name="Player" type="Area2D" node_paths=PackedStringArray("thrusters")]
+script = ExtResource("1_63ctf")
+thrusters = [NodePath("Left_thruster"), NodePath("Right_thruster"), NodePath("Middle thruster")]
+
+[node name="AnimatedSprite2D" type="Sprite2D" parent="."]
+position = Vector2(-5, 0)
+rotation = 1.5708
+scale = Vector2(3, 3)
+texture = ExtResource("2_s3c4r")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_t6ch8")
+
+[node name="Left_thruster" type="CPUParticles2D" parent="."]
+position = Vector2(-10, -21)
+rotation = 1.5708
+emitting = false
+amount = 2
+lifetime = 0.05
+local_coords = true
+texture = ExtResource("4_ut8fl")
+direction = Vector2(0, 1)
+spread = 5.0
+gravity = Vector2(0, 0)
+initial_velocity_min = 250.0
+initial_velocity_max = 250.0
+
+[node name="Right_thruster" type="CPUParticles2D" parent="."]
+position = Vector2(-10, 21)
+rotation = 1.5708
+emitting = false
+amount = 2
+lifetime = 0.05
+local_coords = true
+texture = ExtResource("4_ut8fl")
+direction = Vector2(0, 1)
+spread = 5.0
+gravity = Vector2(0, 0)
+initial_velocity_min = 250.0
+initial_velocity_max = 250.0
+
+[node name="Middle thruster" type="CPUParticles2D" parent="."]
+position = Vector2(-22, 0)
+rotation = 1.5708
+emitting = false
+amount = 10
+lifetime = 0.05
+texture = ExtResource("4_ut8fl")
+direction = Vector2(0, 1)
+spread = 15.0
+gravity = Vector2(0, 0)
+initial_velocity_min = 300.0
+initial_velocity_max = 300.0
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

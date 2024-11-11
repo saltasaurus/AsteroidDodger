@@ -1,0 +1,33 @@
+[gd_scene load_steps=5 format=3 uid="uid://y1tpc67ey4sm"]
+
+[ext_resource type="Script" path="res://spaceships/spaceship_controller.gd" id="1_reo36"]
+[ext_resource type="Texture2D" uid="uid://bmuwyjnsp3n2u" path="res://spaceships/ufo/ufo.png" id="1_yrvlr"]
+[ext_resource type="Texture2D" uid="uid://b7qt5f5fcayp0" path="res://spaceships/thrust_particles/beam_particle.png" id="3_7kw75"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_grdh7"]
+radius = 24.0
+
+[node name="Player" type="Area2D" node_paths=PackedStringArray("thrusters")]
+script = ExtResource("1_reo36")
+thrusters = [NodePath("CPUParticles2D")]
+
+[node name="CPUParticles2D" type="CPUParticles2D" parent="."]
+emitting = false
+amount = 64
+lifetime = 0.3
+explosiveness = 1.0
+texture = ExtResource("3_7kw75")
+direction = Vector2(0, 0)
+spread = 180.0
+gravity = Vector2(0, 0)
+initial_velocity_min = 100.0
+initial_velocity_max = 100.0
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(3, 3)
+texture = ExtResource("1_yrvlr")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_grdh7")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
