@@ -19,4 +19,4 @@ How far will you get?
 | Cadet | 60 |
 | Leader | 90 |
 | Commander | 150 |
-| Battlestar Galactica | 240 |
+| Hans Solo | 240 |
